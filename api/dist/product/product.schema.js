@@ -26,7 +26,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "description", void 0);
 Product = __decorate([
-    (0, mongoose_1.Schema)()
+    (0, mongoose_1.Schema)({ timestamps: true })
 ], Product);
 exports.Product = Product;
 exports.ProductSchema = mongoose_1.SchemaFactory.createForClass(Product);

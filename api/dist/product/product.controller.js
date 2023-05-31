@@ -22,6 +22,15 @@ let ProductController = class ProductController {
     createProduct(name, price, description) {
         return this.productService.create(name, price, description);
     }
+    getProducts() {
+        return this.productService.findAll();
+    }
+    getOneProduct(id) {
+        return this.productService.findOne(id);
+    }
+    updateProduct(id, name, price, description) {
+        return this.productService.update(id, price, name, description);
+    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -30,8 +39,31 @@ __decorate([
     __param(2, (0, common_1.Body)('description')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number, String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ProductController.prototype, "createProduct", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getProducts", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getOneProduct", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)('name')),
+    __param(2, (0, common_1.Body)('price')),
+    __param(3, (0, common_1.Body)('description')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, Number, String]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "updateProduct", null);
 ProductController = __decorate([
     (0, common_1.Controller)('product'),
     __metadata("design:paramtypes", [product_service_1.ProductService])

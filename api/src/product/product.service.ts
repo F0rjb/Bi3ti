@@ -21,4 +21,25 @@ export class ProductService {
     });
     return newProduct.save();
   }
+  async findAll(): Promise<ProductDocument[]> {
+    return this.productModel.find().exec();
+  }
+  async findOne(id: string): Promise<ProductDocument> {
+    return this.productModel.findById(id).exec();
+  }
+  async update(
+    id: string,
+    newPrice: number,
+    newName: string,
+    newDescription: string,
+  ): Promise<ProductDocument> {
+    const existingProduct =
+      await this.productModel.findById(id);
+    existingProduct.name = newName ?? existingProduct.name;
+    existingProduct.description =
+      newDescription ?? existingProduct.description;
+    existingProduct.price =
+      newPrice ?? existingProduct.price;
+    return existingProduct.save();
+  }
 }

@@ -7,7 +7,7 @@ import { Document } from 'mongoose';
 
 export type ProductDocument = Product & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Product {
   @Prop({ required: true })
   name: string;
@@ -15,6 +15,8 @@ export class Product {
   price: number;
   @Prop()
   description: string;
+
+  timestamps: true;
 }
 export const ProductSchema =
   SchemaFactory.createForClass(Product);

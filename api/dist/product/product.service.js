@@ -28,6 +28,21 @@ let ProductService = class ProductService {
         });
         return newProduct.save();
     }
+    async findAll() {
+        return this.productModel.find().exec();
+    }
+    async findOne(id) {
+        return this.productModel.findById(id).exec();
+    }
+    async update(id, newPrice, newName, newDescription) {
+        const existingProduct = await this.productModel.findById(id);
+        existingProduct.name = newName !== null && newName !== void 0 ? newName : existingProduct.name;
+        existingProduct.description =
+            newDescription !== null && newDescription !== void 0 ? newDescription : existingProduct.description;
+        existingProduct.price =
+            newPrice !== null && newPrice !== void 0 ? newPrice : existingProduct.price;
+        return existingProduct.save();
+    }
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),
