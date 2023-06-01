@@ -37,17 +37,13 @@ let ProductService = class ProductService {
     async update(id, newPrice, newName, newDescription) {
         const existingProduct = await this.productModel.findById(id);
         existingProduct.name = newName !== null && newName !== void 0 ? newName : existingProduct.name;
-        existingProduct.description =
-            newDescription !== null && newDescription !== void 0 ? newDescription : existingProduct.description;
-        existingProduct.price =
-            newPrice !== null && newPrice !== void 0 ? newPrice : existingProduct.price;
+        existingProduct.description = newDescription !== null && newDescription !== void 0 ? newDescription : existingProduct.description;
+        existingProduct.price = newPrice !== null && newPrice !== void 0 ? newPrice : existingProduct.price;
         return existingProduct.save();
     }
     async delete(id) {
         const deleted = await this.productModel.findById(id);
-        const deleteFn = await this.productModel
-            .deleteOne({ _id: id })
-            .exec();
+        await this.productModel.deleteOne({ _id: id }).exec();
         return { deleted: deleted };
     }
 };

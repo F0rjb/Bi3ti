@@ -33,20 +33,15 @@ export class ProductService {
     newName: string,
     newDescription: string,
   ): Promise<ProductDocument> {
-    const existingProduct =
-      await this.productModel.findById(id);
+    const existingProduct = await this.productModel.findById(id);
     existingProduct.name = newName ?? existingProduct.name;
-    existingProduct.description =
-      newDescription ?? existingProduct.description;
-    existingProduct.price =
-      newPrice ?? existingProduct.price;
+    existingProduct.description = newDescription ?? existingProduct.description;
+    existingProduct.price = newPrice ?? existingProduct.price;
     return existingProduct.save();
   }
   async delete(id: string): Promise<any> {
     const deleted = await this.productModel.findById(id);
-    const deleteFn = await this.productModel
-      .deleteOne({ _id: id })
-      .exec();
+    await this.productModel.deleteOne({ _id: id }).exec();
 
     return { deleted: deleted };
   }
