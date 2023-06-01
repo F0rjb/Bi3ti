@@ -9,9 +9,7 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ProductModule,
-    MongooseModule.forRoot(
-      'mongodb://localhost:27017/amazon',
-    ),
+    MongooseModule.forRoot('mongodb://localhost:27017/amazon'),
     UserModule,
     AuthModule,
   ],
