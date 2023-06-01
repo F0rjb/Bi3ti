@@ -43,6 +43,13 @@ let ProductService = class ProductService {
             newPrice !== null && newPrice !== void 0 ? newPrice : existingProduct.price;
         return existingProduct.save();
     }
+    async delete(id) {
+        const deleted = await this.productModel.findById(id);
+        const deleteFn = await this.productModel
+            .deleteOne({ _id: id })
+            .exec();
+        return { deleted: deleted };
+    }
 };
 ProductService = __decorate([
     (0, common_1.Injectable)(),

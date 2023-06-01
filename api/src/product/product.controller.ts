@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Patch,
+  Delete,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDocument } from './product.schema';
@@ -49,5 +50,9 @@ export class ProductController {
 
       description,
     );
+  }
+  @Delete(':id')
+  deleteProduct(@Param('id') id: string) {
+    return this.productService.delete(id);
   }
 }

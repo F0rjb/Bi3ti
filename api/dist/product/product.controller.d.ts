@@ -7,4 +7,5 @@ export declare class ProductController {
     getProducts(): Promise<ProductDocument[]>;
     getOneProduct(id: string): Promise<ProductDocument>;
     updateProduct(id: string, name: string, price: number, description?: string): Promise<ProductDocument>;
+    deleteProduct(id: string): Promise<any>;
 }

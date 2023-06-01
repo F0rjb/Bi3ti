@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ProductDocument } from './product.schema';
-import { Model } from 'mongoose';
+import { Model, deleteModel } from 'mongoose';
 
 @Injectable()
 export class ProductService {
@@ -41,5 +41,13 @@ export class ProductService {
     existingProduct.price =
       newPrice ?? existingProduct.price;
     return existingProduct.save();
+  }
+  async delete(id: string): Promise<any> {
+    const deleted = await this.productModel.findById(id);
+    const deleteFn = await this.productModel
+      .deleteOne({ _id: id })
+      .exec();
+
+    return { deleted: deleted };
   }
 }
