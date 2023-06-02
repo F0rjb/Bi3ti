@@ -3,7 +3,6 @@ import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { NewUserDTO } from 'src/user/dtos/new-user.dto';
 import { UserDetails } from 'src/user/user-details.interface';
-import { UserModule } from 'src/user/user.module';
 import { ExistingUserDTO } from './../user/dtos/existing-user.dto';
 import { JwtService } from '@nestjs/jwt/dist';
 
@@ -12,7 +11,7 @@ export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
   async hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, 12);
   }
