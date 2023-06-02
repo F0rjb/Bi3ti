@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
+const jwt_guard_1 = require("../auth/guards/jwt.guard");
 let ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
@@ -51,6 +52,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "getProducts", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtGuard),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

@@ -13,17 +13,50 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
 const bcrypt = require("bcrypt");
+const dist_1 = require("@nestjs/jwt/dist");
 let AuthService = class AuthService {
-    constructor(userService) {
+    constructor(userService, jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
     async hashPassword(password) {
         return bcrypt.hash(password, 12);
     }
+    async register(user) {
+        const { name, email, password } = user;
+        const existingUser = await this.userService.findByEmail(email);
+        if (existingUser)
+            return 'Email Taken ';
+        const hashedPassword = await this.hashPassword(password);
+        const newUser = await this.userService.create(name, email, hashedPassword);
+        return this.userService._getUserDetails(newUser);
+    }
+    async doesPasswordMatch(passwrod, hashedPassword) {
+        return bcrypt.compare(passwrod, hashedPassword);
+    }
+    async validateUser(email, password) {
+        const user = await this.userService.findByEmail(email);
+        const doesUserExist = !!user;
+        if (!doesUserExist)
+            return null;
+        const doesPasswordMatch = await this.doesPasswordMatch(password, user.password);
+        if (!doesPasswordMatch)
+            return null;
+        return this.userService._getUserDetails(user);
+    }
+    async login(existingUser) {
+        const { email, password } = existingUser;
+        const user = await this.validateUser(email, password);
+        if (!user)
+            return null;
+        const jwt = await this.jwtService.signAsync({ user });
+        return { token: jwt };
+    }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        dist_1.JwtService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

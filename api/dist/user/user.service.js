@@ -23,6 +23,16 @@ let UserService = class UserService {
     _getUserDetails(user) {
         return { id: user._id, name: user.name, email: user.email };
     }
+    async findByEmail(email) {
+        return this.userModel.findOne({ email }).exec();
+    }
+    async findById(id) {
+        const user = await this.userModel.findById(id).exec();
+        if (!user) {
+            return null;
+        }
+        return this._getUserDetails(user);
+    }
     async create(name, email, hashedPassword) {
         const newUser = new this.userModel({
             name,
