@@ -7,7 +7,7 @@ import { HttpCode } from '@nestjs/common/decorators';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
   @Post('register')
   register(@Body() user: NewUserDTO): Promise<UserDetails | null> {
     return this.authService.register(user);
