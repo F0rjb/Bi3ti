@@ -15,21 +15,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
+const jwt_guard_1 = require("../auth/guards/jwt.guard");
 let UserController = class UserController {
-    constructor(UserService) {
-        this.UserService = UserService;
+    constructor(userService) {
+        this.userService = userService;
     }
     getUser(id) {
-        return this.UserService.findById(id);
+        return this.userService.findById(id);
+    }
+    getProfile(req) {
+        return req.user;
     }
 };
 __decorate([
-    (0, common_1.Get)(':id'),
+    (0, common_1.Get)('else/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUser", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.JwtGuard),
+    (0, common_1.Get)('/profile'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getProfile", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

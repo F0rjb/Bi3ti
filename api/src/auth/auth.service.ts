@@ -11,16 +11,26 @@ export class AuthService {
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
-  ) { }
+  ) {}
   async hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, 12);
   }
-  async register(user: Readonly<NewUserDTO>): Promise<UserDetails | any> {
+  async register(
+    user: Readonly<NewUserDTO>,
+  ): Promise<UserDetails | any> {
     const { name, email, password } = user;
-    const existingUser = await this.userService.findByEmail(email);
+    const existingUser = await this.userService.findByEmail(
+      email,
+    );
     if (existingUser) return 'Email Taken ';
-    const hashedPassword = await this.hashPassword(password);
-    const newUser = await this.userService.create(name, email, hashedPassword);
+    const hashedPassword = await this.hashPassword(
+      password,
+    );
+    const newUser = await this.userService.create(
+      name,
+      email,
+      hashedPassword,
+    );
     return this.userService._getUserDetails(newUser);
   }
   async doesPasswordMatch(
