@@ -41,14 +41,14 @@ let AuthService = class AuthService {
             return null;
         const doesPasswordMatch = await this.doesPasswordMatch(password, user.password);
         if (!doesPasswordMatch)
-            return null;
+            throw new common_1.HttpException('Bad Authentication', common_1.HttpStatus.NOT_FOUND);
         return this.userService._getUserDetails(user);
     }
     async login(existingUser) {
         const { email, password } = existingUser;
         const user = await this.validateUser(email, password);
         if (!user)
-            return null;
+            throw new common_1.HttpException('Bad Authentication', common_1.HttpStatus.NOT_FOUND);
         const jwt = await this.jwtService.signAsync({ user });
         return { token: jwt };
     }

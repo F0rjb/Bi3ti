@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import { NewUserDTO } from 'src/user/dtos/new-user.dto';
@@ -50,7 +54,11 @@ export class AuthService {
       password,
       user.password,
     );
-    if (!doesPasswordMatch) return null;
+    if (!doesPasswordMatch)
+      throw new HttpException(
+        'Bad Authentication',
+        HttpStatus.NOT_FOUND,
+      );
     return this.userService._getUserDetails(user);
   }
   async login(
@@ -58,7 +66,11 @@ export class AuthService {
   ): Promise<{ token: string } | null> {
     const { email, password } = existingUser;
     const user = await this.validateUser(email, password);
-    if (!user) return null;
+    if (!user)
+      throw new HttpException(
+        'Bad Authentication',
+        HttpStatus.NOT_FOUND,
+      );
     const jwt = await this.jwtService.signAsync({ user });
     return { token: jwt };
   }
