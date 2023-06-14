@@ -26,7 +26,11 @@ export class AuthService {
     const existingUser = await this.userService.findByEmail(
       email,
     );
-    if (existingUser) return 'Email Taken ';
+    if (existingUser)
+      throw new HttpException(
+        'Credentials already in use',
+        HttpStatus.NOT_FOUND,
+      );
     const hashedPassword = await this.hashPassword(
       password,
     );
@@ -61,7 +65,7 @@ export class AuthService {
     );
     if (!doesPasswordMatch)
       throw new HttpException(
-        'Bad Authentication',
+        'Bad Credentials',
         HttpStatus.NOT_FOUND,
       );
     return this.userService._getUserDetails(user);
@@ -73,7 +77,7 @@ export class AuthService {
     const user = await this.validateUser(email, password);
     if (!user)
       throw new HttpException(
-        'Bad Authentication',
+        'invalid Credentials',
         HttpStatus.NOT_FOUND,
       );
     const jwt = await this.jwtService.signAsync({ user });
