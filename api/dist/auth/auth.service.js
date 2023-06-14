@@ -29,7 +29,11 @@ let AuthService = class AuthService {
             return 'Email Taken ';
         const hashedPassword = await this.hashPassword(password);
         const newUser = await this.userService.create(name, email, hashedPassword);
-        return this.userService._getUserDetails(newUser);
+        const jwt = await this.jwtService.signAsync({ user });
+        return {
+            user: this.userService._getUserDetails(newUser),
+            jwt,
+        };
     }
     async doesPasswordMatch(passwrod, hashedPassword) {
         return bcrypt.compare(passwrod, hashedPassword);

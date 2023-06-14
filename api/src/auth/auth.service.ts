@@ -9,7 +9,6 @@ import { NewUserDTO } from 'src/user/dtos/new-user.dto';
 import { UserDetails } from 'src/user/user-details.interface';
 import { ExistingUserDTO } from './../user/dtos/existing-user.dto';
 import { JwtService } from '@nestjs/jwt/dist';
-import { UserDocument } from 'src/user/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -36,8 +35,13 @@ export class AuthService {
       email,
       hashedPassword,
     );
-    return this.userService._getUserDetails(newUser);
+    const jwt = await this.jwtService.signAsync({ user });
+    return {
+      user: this.userService._getUserDetails(newUser),
+      jwt,
+    };
   }
+
   async doesPasswordMatch(
     passwrod: string,
     hashedPassword: string,
