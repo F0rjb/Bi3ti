@@ -50,7 +50,7 @@ let AuthService = class AuthService {
         if (!user)
             throw new common_1.HttpException('Bad Authentication', common_1.HttpStatus.NOT_FOUND);
         const jwt = await this.jwtService.signAsync({ user });
-        return { token: jwt };
+        return { token: jwt, user: user };
     }
 };
 AuthService = __decorate([

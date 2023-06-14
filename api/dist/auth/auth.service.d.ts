@@ -13,5 +13,6 @@ export declare class AuthService {
     validateUser(email: string, password: string): Promise<UserDetails | null>;
     login(existingUser: ExistingUserDTO): Promise<{
         token: string;
+        user: UserDetails;
     } | null>;
 }

@@ -9,6 +9,7 @@ import { NewUserDTO } from 'src/user/dtos/new-user.dto';
 import { UserDetails } from 'src/user/user-details.interface';
 import { ExistingUserDTO } from './../user/dtos/existing-user.dto';
 import { JwtService } from '@nestjs/jwt/dist';
+import { UserDocument } from 'src/user/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -63,7 +64,7 @@ export class AuthService {
   }
   async login(
     existingUser: ExistingUserDTO,
-  ): Promise<{ token: string } | null> {
+  ): Promise<{ token: string; user: UserDetails } | null> {
     const { email, password } = existingUser;
     const user = await this.validateUser(email, password);
     if (!user)
@@ -72,6 +73,6 @@ export class AuthService {
         HttpStatus.NOT_FOUND,
       );
     const jwt = await this.jwtService.signAsync({ user });
-    return { token: jwt };
+    return { token: jwt, user: user };
   }
 }
