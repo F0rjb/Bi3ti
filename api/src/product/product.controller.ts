@@ -21,7 +21,11 @@ export class ProductController {
     @Body('price') price: number,
     @Body('description') description?: string,
   ): Promise<ProductDocument> {
-    return this.productService.create(name, price, description);
+    return this.productService.create(
+      name,
+      price,
+      description,
+    );
   }
   @Get()
   getProducts(): Promise<ProductDocument[]> {
@@ -29,7 +33,9 @@ export class ProductController {
   }
   @UseGuards(JwtGuard)
   @Get(':id')
-  getOneProduct(@Param('id') id: string): Promise<ProductDocument> {
+  getOneProduct(
+    @Param('id') id: string,
+  ): Promise<ProductDocument> {
     return this.productService.findOne(id);
   }
   @Patch(':id')
@@ -43,7 +49,6 @@ export class ProductController {
       id,
       price,
       name,
-
       description,
     );
   }
