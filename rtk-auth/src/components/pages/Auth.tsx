@@ -71,12 +71,16 @@ const Auth = () => {
     }
   }, [isLoginSuccess, isRegisterSuccess])
   useEffect(() => {
-    if (isLoginError) {
-      console.log(loginError)
-      toast.error((loginError as any).data.message)
-    }
-    if (isRegisterError) {
-      toast.error((registerError as any).data.message)
+    try {
+      if (isLoginError) {
+        console.log(loginError)
+        toast.error((loginError as any).data.message)
+      }
+      if (isRegisterError) {
+        toast.error((registerError as any).data.message)
+      }
+    } catch (error) {
+      console.error(error)
     }
   }, [isLoginError, isRegisterError])
 
