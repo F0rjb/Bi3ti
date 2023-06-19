@@ -1,14 +1,21 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
 import { authApi } from "../components/services/authApi"
-import { setupListeners } from "@reduxjs/toolkit/dist/query"
+import { setupListeners } from "@reduxjs/toolkit/query/react"
 import authReducer from "../features/authSlice"
 
-export const store = configureStore({
-  reducer: { auth: authReducer, [authApi.reducerPath]: authApi.reducer },
+const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    [authApi.reducerPath]: authApi.reducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware),
 })
 
+// Setup listeners for RTK-Query to enable automatic cache invalidation and refetching
+setupListeners(store.dispatch)
+
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
-setupListeners(store.dispatch)
+
+export default store

@@ -1,23 +1,35 @@
 import React, { useEffect } from "react"
 import ProductCard from "./ProductCard"
-import { useGetProductQuery } from "../services/productsApi"
+import { useGetProductsQuery } from "../services/productsApi"
 
 const Products = () => {
   const {
-    data: allProdcutsData,
+    data: allProductsData,
     error,
     isError,
     isLoading,
     isSuccess,
-  } = useGetProductQuery()
+  } = useGetProductsQuery()
 
-  if (isLoading) return <h1>Loeading</h1>
-  console.log(data)
+  useEffect(() => {
+    // You can perform additional actions here if needed
+  }, [])
+
+  if (isLoading) return <h1>Loading</h1>
+
   return (
     <div>
       {isSuccess
-        ? allProdcutsData.map((el: object, id: number) => <h1>{el}</h1>)
-        : "wait"}
+        ? allProductsData.map((product) => (
+            <h1>{product}</h1>
+            // <ProductCard
+            //   // key={product.id} // Assuming each product has a unique "id" property
+            //   // name={product.name}
+            //   description={product.description}
+            //   price={product.price}
+            // />
+          ))
+        : "Loading products..."}
     </div>
   )
 }

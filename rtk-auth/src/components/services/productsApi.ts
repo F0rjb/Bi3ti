@@ -1,17 +1,18 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { productSlice } from "./productsApi"
 
 interface Product {
   name: string
   description: string
   price: number
 }
+
 interface ProductState {
   loading: boolean
   error: string | null
   products: Product[]
 }
+
 const initialState: ProductState = {
   loading: false,
   error: null,
@@ -41,9 +42,10 @@ export const productApi = createApi({
   reducerPath: "productsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/product" }),
   endpoints: (builder) => ({
-    getProducts: builder.query({
+    getProducts: builder.query<Product[], void>({
       query: () => "",
     }),
   }),
 })
-export const useGetProductQuery = productApi.useGetProductsQuery
+
+export const { useGetProductsQuery } = productApi
