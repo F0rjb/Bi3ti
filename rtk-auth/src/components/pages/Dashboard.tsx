@@ -13,7 +13,9 @@ const Dashboard = () => {
     toast.success("User logout successfully")
     navigate("/auth")
   }
-
+  const handleProducts = () => {
+    navigate("/products")
+  }
   return (
     <section className="vh-100 gradient-custom">
       <div className="container py-4 h-100">
@@ -38,6 +40,15 @@ const Dashboard = () => {
                     Log out
                   </button>{" "}
                 </div>
+                <button
+                  className="btn btn-outline-light btn-lg px-5 mt-3"
+                  type="button"
+                  onClick={() => {
+                    handleProducts()
+                  }}
+                >
+                  Products
+                </button>{" "}
               </div>
             </div>
           </div>

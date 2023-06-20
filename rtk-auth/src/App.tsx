@@ -34,7 +34,14 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/products" element={<Products />} />
+          <Route
+            path="/products"
+            element={
+              <PrivateRoute>
+                <Products />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>
