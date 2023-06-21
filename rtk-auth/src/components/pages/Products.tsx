@@ -21,17 +21,12 @@ const Products = () => {
     <div>
       {isSuccess
         ? allProductsData.map((product) => (
-            <div key={product._id}>
-              <h1>{product.name}</h1>
-              <p>{product.description}</p>
-              <p>{product.price}</p>
+            <div className="" key={product._id}>
+              {/* // <h1>{product.name}</h1>
+              // <p>{product.description}</p>
+              // <p>{product.price}</p> */}
               {/* Render other properties as needed */}
-              {/* <ProductCard
-                key={product.id}
-                name={product.name}
-                description={product.description}
-                price={product.price}
-              /> */}
+              <ProductCard key={product._id} el={product} />
             </div>
           ))
         : "Loading products..."}
