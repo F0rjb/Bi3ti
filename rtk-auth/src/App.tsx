@@ -10,6 +10,7 @@ import { useEffect } from "react"
 import { setUser } from "./features/authSlice"
 import PrivateRoute from "./components/PrivateRoute"
 import Products from "./components/pages/Products"
+import Navbar from "./components/Navbar"
 
 function App() {
   const dispatch = useAppDispatch()
